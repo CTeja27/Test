@@ -2,179 +2,517 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>AMS Desktop — FAQ</title>
-  <meta name="description" content="AMS Desktop FAQ and troubleshooting for Host/Client setup, discovery, ports, Docker services, and MediaConvert." />
+  <meta name="description" content="AMS Desktop FAQ: what the app is, Host/Client setup, real-time syncing, modules, MediaConvert, requirements, and troubleshooting." />
+  <meta name="theme-color" content="#0b0f14" />
+
   <style>
     :root{
-      --bg:#0b0f14;
-      --panel:#0f1722;
-      --text:#e8eef7;
-      --muted:rgba(232,238,247,.72);
+      --bg0:#070a10;
+      --bg1:#0b0f14;
+      --panel: rgba(16, 24, 40, .62);
+      --panel2: rgba(12, 18, 32, .58);
+      --glass: rgba(12, 18, 32, .55);
+
+      --text:#eaf0ff;
+      --muted:rgba(234,240,255,.72);
+      --faint:rgba(234,240,255,.56);
+
       --line:rgba(255,255,255,.10);
-      --brand:#1f6feb;
-      --shadow: 0 18px 60px rgba(0,0,0,.35);
-      --radius:18px;
-      --max:980px;
+      --line2:rgba(255,255,255,.14);
+
+      --brand:#5aa2ff;
+      --brand2:#1f6feb;
+      --good:#31d68b;
+
+      --shadow: 0 26px 90px rgba(0,0,0,.55);
+      --shadow2: 0 16px 46px rgba(0,0,0,.36);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 980px;
     }
+
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      background:
-        radial-gradient(1000px 600px at 20% -10%, rgba(31,111,235,.35), transparent 60%),
-        radial-gradient(900px 500px at 90% 10%, rgba(31,111,235,.18), transparent 55%),
-        var(--bg);
       color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 18% -12%, rgba(90,162,255,.32), transparent 55%),
+        radial-gradient(900px 520px at 90% 10%, rgba(31,111,235,.22), transparent 55%),
+        radial-gradient(1200px 700px at 50% 120%, rgba(90,162,255,.10), transparent 58%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
+
+    .bgGrid{
+      position:fixed; inset:-2px;
+      pointer-events:none;
+      opacity:.26;
+      background:
+        linear-gradient(to right, rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 62px 62px;
+      mask-image: radial-gradient(900px 540px at 50% 0%, rgba(0,0,0,1), transparent 75%);
+      z-index:-1;
+    }
+
+    a{color:inherit}
     .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 70px;}
-    .top{
-      padding:18px 18px;
+
+    /* Topbar */
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      padding:14px 16px;
       border:1px solid var(--line);
       border-radius:var(--radius);
-      background:rgba(15,23,34,.70);
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow);
-      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: var(--shadow2);
+      position: sticky;
+      top: 14px;
+      z-index: 20;
       flex-wrap:wrap;
     }
-    .top h1{margin:0; font-size:18px}
-    .top p{margin:4px 0 0; color:var(--muted); font-size:13.5px; line-height:1.5}
+    .brand{display:flex; align-items:center; gap:12px; min-width:260px;}
+    .logo{
+      width:42px; height:42px; border-radius:14px;
+      background: linear-gradient(135deg, rgba(90,162,255,1), rgba(31,111,235,1));
+      box-shadow: 0 14px 34px rgba(90,162,255,.22);
+      display:grid; place-items:center;
+      font-weight:950;
+      letter-spacing:.5px;
+      color:#07101b;
+      user-select:none;
+    }
+    .brand h1{margin:0; font-size:14px; line-height:1.1; font-weight:950;}
+    .brand p{margin:2px 0 0; color:var(--muted); font-size:12.5px}
+
     .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
       padding:10px 12px;
       border-radius:14px;
       border:1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.05);
       color:var(--text);
       text-decoration:none;
-      font-weight:800;
+      font-weight:950;
       font-size:13px;
-      transition:.18s ease;
-      display:inline-flex; align-items:center; gap:8px;
+      transition:.16s ease;
+      white-space:nowrap;
     }
-    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.07)}
+    .btn:hover{transform: translateY(-2px); background: rgba(255,255,255,.065); border-color: rgba(255,255,255,.16);}
+    .btn.primary{
+      color:#07101b;
+      border-color: rgba(255,255,255,.18);
+      background: linear-gradient(135deg, rgba(90,162,255,1), rgba(31,111,235,1));
+      box-shadow: 0 14px 40px rgba(31,111,235,.20);
+    }
+
+    /* Card */
     .card{
       margin-top:16px;
-      padding:16px 16px;
       border:1px solid var(--line);
       border-radius:var(--radius);
-      background:rgba(15,23,34,.70);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 12px 45px rgba(0,0,0,.30);
+      background: var(--panel);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
     }
-    .q{
+    .card:before{
+      content:"";
+      position:absolute; inset:-1px;
+      border-radius: inherit;
+      padding:1px;
+      background: linear-gradient(135deg, rgba(90,162,255,.42), rgba(31,111,235,.22), rgba(255,255,255,.10));
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events:none;
+      opacity:.55;
+    }
+
+    .hero{padding:18px 18px 16px;}
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(90,162,255,.28);
+      background: rgba(90,162,255,.10);
+      color: rgba(234,240,255,.92);
+      font-size:12.5px;
+      font-weight:950;
+      letter-spacing:.2px;
+    }
+    .kdot{
+      width:8px; height:8px; border-radius:999px;
+      background: var(--good);
+      box-shadow: 0 0 0 6px rgba(49,214,139,.14);
+    }
+    h2{
+      margin:12px 0 6px;
+      font-size: clamp(26px, 3.2vw, 34px);
+      line-height:1.08;
+      letter-spacing:-.6px;
+      font-weight:950;
+    }
+    .lead{
       margin:0;
-      font-size:15px;
-      font-weight:900;
+      color:var(--muted);
+      line-height:1.75;
+      font-size:14.8px;
+      max-width: 84ch;
+    }
+
+    /* Section + accordion */
+    .section{padding: 14px 16px 16px; border-top: 1px solid rgba(255,255,255,.07);}
+    .sectionTitle{
+      margin: 0 0 10px;
+      font-size: 14px;
+      letter-spacing: .2px;
+      font-weight: 950;
+      color: rgba(234,240,255,.92);
+      display:flex; align-items:center; gap:10px;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background: rgba(90,162,255,.55);
+      box-shadow: 0 0 0 6px rgba(90,162,255,.12);
+    }
+    details{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.12);
+      border-radius: 18px;
+      padding: 12px 12px;
+      margin: 10px 0;
+      transition: .16s ease;
+    }
+    details:hover{border-color: rgba(255,255,255,.16); background: rgba(0,0,0,.15)}
+    summary{
+      cursor:pointer;
+      list-style:none;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      font-weight:950;
+      font-size:14px;
       letter-spacing:-.2px;
     }
-    .a{
-      margin:8px 0 0;
-      color:var(--muted);
-      line-height:1.65;
-      font-size:14px;
+    summary::-webkit-details-marker{display:none}
+    .chev{
+      width:28px; height:28px;
+      border-radius:10px;
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.045);
+      flex:0 0 auto;
+      margin-top: -2px;
+      transition:.16s ease;
     }
-    .hr{height:1px; background:rgba(255,255,255,.10); margin:14px 0;}
+    details[open] .chev{transform: rotate(180deg); background: rgba(90,162,255,.09); border-color: rgba(90,162,255,.20)}
+    .ans{
+      margin-top:10px;
+      color:var(--muted);
+      line-height:1.75;
+      font-size:14.5px;
+    }
+    .ans ul{margin:8px 0 0 18px; line-height:1.8; color: var(--muted);}
     code{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       font-size:12px;
-      padding:2px 6px;
+      padding:2px 7px;
       border-radius:10px;
-      background: rgba(31,111,235,.12);
-      border:1px solid rgba(31,111,235,.18);
-      color: rgba(232,238,247,.95);
+      background: rgba(90,162,255,.10);
+      border:1px solid rgba(90,162,255,.18);
+      color: rgba(234,240,255,.95);
+      white-space: nowrap;
     }
-    ul{margin:8px 0 0 18px; color:var(--muted); line-height:1.7}
-    .footer{margin-top:16px; color:rgba(232,238,247,.55); font-size:12.5px; text-align:center;}
+    .callout{
+      margin-top: 10px;
+      border: 1px solid rgba(90,162,255,.20);
+      background: rgba(90,162,255,.08);
+      border-radius: 16px;
+      padding: 10px 12px;
+      color: rgba(234,240,255,.84);
+      font-size: 13.8px;
+      line-height: 1.6;
+    }
+
+    .footer{
+      margin-top:16px;
+      color:rgba(234,240,255,.55);
+      font-size:12.6px;
+      text-align:center;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{transition:none !important}
+      html{scroll-behavior:auto}
+    }
   </style>
 </head>
 
 <body>
+  <div class="bgGrid" aria-hidden="true"></div>
+
   <div class="wrap">
-    <header class="top">
-      <div>
-        <h1>AMS Desktop — FAQ</h1>
-        <p>Setup, networking, Docker services, and common fixes for Host/Client deployments.</p>
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">AMS</div>
+        <div>
+          <h1>AMS Desktop — FAQ</h1>
+          <p>Inspired by AMS Network • Management software for arts organizations</p>
+        </div>
       </div>
+
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
         <a class="btn" href="index.html">← Back to Download</a>
-        <a class="btn" href="#ports">Ports</a>
-        <a class="btn" href="#docker">Docker</a>
+        <a class="btn" href="#getting-started">Getting started</a>
+        <a class="btn" href="#host-client">Host + Client</a>
+        <a class="btn" href="#troubleshooting">Troubleshooting</a>
+        <a class="btn primary" href="index.html#download">Download</a>
       </div>
     </header>
 
-    <section class="card">
-      <p class="q">What is AMS Desktop?</p>
-      <p class="a">
-        AMS Desktop is a desktop app where one computer can run as a <b>Host</b> (server) and other computers connect as
-        <b>Clients</b> on the same Wi-Fi. Clients can automatically discover the Host and share the same real-time workspace. :contentReference[oaicite:17]{index=17} :contentReference[oaicite:18]{index=18}
+    <section class="card hero" id="getting-started">
+      <div class="kicker"><span class="kdot" aria-hidden="true"></span> Clear product explanation • Real troubleshooting</div>
+      <h2>What is AMS Desktop?</h2>
+      <p class="lead">
+        <b>AMS Desktop</b> is a local-first management workspace inspired by <b>AMS Network</b>.
+        It’s built for <b>arts organizations</b> that need a clean system to manage members, projects, campaigns, billing, reporting,
+        and media workflows — while keeping the team on <b>one shared source of truth</b>.
       </p>
-      <div class="hr"></div>
-
-      <p class="q">What’s the difference between Host and Client?</p>
-      <p class="a">
-        <b>Host</b> runs backend services locally using Docker and creates the Organization + Admin during setup.
-        <b>Client</b> connects to the Host’s server URL (manually or via auto-discovery). :contentReference[oaicite:19]{index=19}
-      </p>
-    </section>
-
-    <section class="card" id="ports">
-      <p class="q">Which ports need to be open?</p>
-      <p class="a">
-        For clients to find and connect to the Host, the Host machine should allow:
-      </p>
-      <ul>
-        <li><code>UDP 49501</code> — LAN discovery broadcast</li>
-        <li><code>TCP 4000</code> — Rails API service</li>
-        <li><code>TCP 5001</code> — MediaConvert service</li>
-      </ul>
-      <p class="a">
-        Host mode can also attempt to set Windows Firewall rules automatically (with an Admin prompt). :contentReference[oaicite:20]{index=20} :contentReference[oaicite:21]{index=21}
+      <p class="lead" style="margin-top:10px;">
+        One computer becomes the <b>Host</b> (runs the backend services locally), and other computers join as <b>Clients</b>
+        on the same Wi-Fi/LAN to use the same shared data in real time.
       </p>
     </section>
 
-    <section class="card" id="docker">
-      <p class="q">Do all computers need Docker?</p>
-      <p class="a">
-        No. Typically only the <b>Host</b> needs Docker Desktop because it runs the backend services locally.
-        Clients connect over the network to the Host’s server. :contentReference[oaicite:22]{index=22}
-      </p>
-      <div class="hr"></div>
+    <section class="card section" id="product">
+      <div class="sectionTitle"><span class="dot" aria-hidden="true"></span> Product overview</div>
 
-      <p class="q">What services run on the Host?</p>
-      <p class="a">
-        The standard stack uses Docker Compose to run a Rails service on <code>:4000</code>, Postgres, Redis,
-        and a MediaConvert service on <code>:5001</code>. :contentReference[oaicite:23]{index=23}
-      </p>
+      <details open>
+        <summary>
+          What is AMS Desktop used for?
+          <span class="chev" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="ans">
+          AMS Desktop helps an organization manage operational work in one system:
+          <ul>
+            <li><b>Membership</b> — organization contacts / members</li>
+            <li><b>Projects</b> — track work and collaboration</li>
+            <li><b>Campaigns + Applications</b> — intake + workflow tracking</li>
+            <li><b>Programs + Submissions</b> — structured entries and statuses</li>
+            <li><b>Billing + Payments</b> — invoice items and payment status</li>
+            <li><b>Reporting</b> — summaries for organization decisions</li>
+            <li><b>Donations</b> — donor records and visibility</li>
+            <li><b>MediaConvert</b> — start/monitor transcoding jobs (Host runs the service)</li>
+          </ul>
+          <div class="callout">
+            The goal: your team stops tracking everything in scattered docs/spreadsheets and works from one shared workspace.
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          Who is it for?
+          <span class="chev" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="ans">
+          AMS Desktop is designed for arts organizations and small teams that want:
+          <ul>
+            <li>A clean internal tool they can run locally</li>
+            <li>Shared access for multiple computers in the same office/network</li>
+            <li>Simple onboarding: Host once, then Clients join</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          Is AMS Desktop cloud-based?
+          <span class="chev" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="ans">
+          AMS Desktop is <b>local-first</b>. It’s meant for teams working on the same network (Wi-Fi/LAN).
+          Remote access outside the office would need additional networking/VPN setup.
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          Where is the data stored?
+          <span class="chev" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="ans">
+          Your shared data lives on the <b>Host machine</b> because the backend services run there.
+          Clients connect to the Host to read/write the same shared data.
+        </div>
+      </details>
     </section>
 
-    <section class="card">
-      <p class="q">“No server found” when I click Find Server Automatically — what do I do?</p>
-      <p class="a">
-        Make sure:
-      </p>
-      <ul>
-        <li>The Host is running AMS Desktop in <b>Host mode</b>.</li>
-        <li>Both computers are on the <b>same Wi-Fi</b>.</li>
-        <li>Windows Firewall allows <code>UDP 49501</code> and the service ports <code>TCP 4000</code> / <code>TCP 5001</code>.</li>
-        <li>If needed, manually enter the Host URL in the client setup (example: <code>http://HOST_IP:4000</code>).</li>
-      </ul>
-      <p class="a">This matches the setup screen behavior for LAN scan + fallback manual URL entry. :contentReference[oaicite:24]{index=24}</p>
+    <section class="card section" id="host-client">
+      <div class="sectionTitle"><span class="dot" aria-hidden="true"></span> Host + Client</div>
+
+      <details open>
+        <summary>
+          What’s the difference between Host and Client?
+          <span class="chev" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="ans">
+          <ul>
+            <li><b>Host</b> = the “server computer.” It runs the backend services and provides the workspace.</li>
+            <li><b>Client</b> = any other computer. It connects to the Host and uses the same data.</li>
+          </ul>
+          Think of it like: one Host powers the system, Clients are the workstations.
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          Do all computers need Docker?
+          <span class="chev" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="ans">
+          Usually only the <b>Host</b> needs Docker Desktop because it runs the services locally.
+          Clients typically just need AMS Desktop and access to the Host on the network.
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          What is “Find Server Automatically”?
+          <span class="chev" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="ans">
+          It scans the local network to detect the Host and auto-fill the server URL.
+          If it can’t detect the Host, you can connect manually using:
+          <code>http://HOST_IP:4000</code>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          Which ports are used?
+          <span class="chev" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="ans">
+          Common ports on the Host:
+          <ul>
+            <li><code>UDP 49501</code> — LAN discovery (auto-find)</li>
+            <li><code>TCP 4000</code> — backend API</li>
+            <li><code>TCP 5001</code> — MediaConvert service</li>
+          </ul>
+        </div>
+      </details>
     </section>
 
-    <section class="card">
-      <p class="q">How do I reset AMS Desktop back to the first-time setup?</p>
-      <p class="a">
-        On the Login screen, click <b>“Reset / Back to Setup”</b>. This clears host/client mode and server URL and returns you to setup. :contentReference[oaicite:25]{index=25}
-      </p>
+    <section class="card section" id="mediaconvert">
+      <div class="sectionTitle"><span class="dot" aria-hidden="true"></span> MediaConvert</div>
+
+      <details>
+        <summary>
+          What does MediaConvert do inside the app?
+          <span class="chev" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="ans">
+          MediaConvert inside AMS Desktop lets your organization start and monitor transcoding jobs.
+          The Host runs the service, and Clients can view job status through the shared workspace.
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          Why does it work best on the Host?
+          <span class="chev" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="ans">
+          Because the Host is where backend services run.
+          This keeps the workflow consistent: one machine executes jobs; the whole team sees the result.
+        </div>
+      </details>
     </section>
 
-    <section class="card">
-      <p class="q">How does MediaConvert work in AMS Desktop?</p>
-      <p class="a">
-        AMS Desktop can start jobs and check job status through the local MediaConvert service on <code>http://127.0.0.1:5001</code>
-        (Host side). :contentReference[oaicite:26]{index=26}
-      </p>
+    <section class="card section" id="troubleshooting">
+      <div class="sectionTitle"><span class="dot" aria-hidden="true"></span> Troubleshooting</div>
+
+      <details open>
+        <summary>
+          “No server found” on Client — what should I check?
+          <span class="chev" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="ans">
+          Checklist:
+          <ul>
+            <li>Host is running AMS Desktop in <b>Host mode</b> and services are up.</li>
+            <li>Host + Client are on the <b>same Wi-Fi/LAN</b>.</li>
+            <li>Host firewall allows <code>UDP 49501</code> and <code>TCP 4000</code> (and <code>TCP 5001</code> if needed).</li>
+            <li>Try manual entry on Client: <code>http://HOST_IP:4000</code></li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          Client connects but data looks empty / not updating — why?
+          <span class="chev" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="ans">
+          Most common causes:
+          <ul>
+            <li>Client is pointing to the wrong Host URL</li>
+            <li>Host IP changed after reboot/network change</li>
+            <li>Host services restarted and Client needs to reconnect</li>
+          </ul>
+          Fix: re-run auto-find or update the manual Host URL.
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          I changed Wi-Fi and Clients stopped working — what now?
+          <span class="chev" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="ans">
+          When Wi-Fi changes, the Host IP can change.
+          Re-run auto-find on Clients or manually update the Host URL.
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          How do I reset back to first-time setup?
+          <span class="chev" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="ans">
+          Use the app’s <b>Reset / Back to Setup</b> option.
+          It returns you to Host/Client selection and lets you reconfigure the server URL.
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          Google Drive shows “can’t scan for viruses” — is it safe?
+          <span class="chev" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="ans">
+          That warning is normal for large files.
+          Click <b>Download anyway</b>.
+        </div>
+      </details>
     </section>
 
     <div class="footer">Powered by AMS Network © 2026</div>
