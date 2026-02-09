@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AMS Desktop — FAQ</title>
+  <meta name="description" content="AMS Desktop FAQ and troubleshooting for Host/Client setup, discovery, ports, Docker services, and MediaConvert." />
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#0f1722;
+      --text:#e8eef7;
+      --muted:rgba(232,238,247,.72);
+      --line:rgba(255,255,255,.10);
+      --brand:#1f6feb;
+      --shadow: 0 18px 60px rgba(0,0,0,.35);
+      --radius:18px;
+      --max:980px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background:
+        radial-gradient(1000px 600px at 20% -10%, rgba(31,111,235,.35), transparent 60%),
+        radial-gradient(900px 500px at 90% 10%, rgba(31,111,235,.18), transparent 55%),
+        var(--bg);
+      color:var(--text);
+    }
+    .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 70px;}
+    .top{
+      padding:18px 18px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:rgba(15,23,34,.70);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      flex-wrap:wrap;
+    }
+    .top h1{margin:0; font-size:18px}
+    .top p{margin:4px 0 0; color:var(--muted); font-size:13.5px; line-height:1.5}
+    .btn{
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color:var(--text);
+      text-decoration:none;
+      font-weight:800;
+      font-size:13px;
+      transition:.18s ease;
+      display:inline-flex; align-items:center; gap:8px;
+    }
+    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.07)}
+    .card{
+      margin-top:16px;
+      padding:16px 16px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:rgba(15,23,34,.70);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 45px rgba(0,0,0,.30);
+    }
+    .q{
+      margin:0;
+      font-size:15px;
+      font-weight:900;
+      letter-spacing:-.2px;
+    }
+    .a{
+      margin:8px 0 0;
+      color:var(--muted);
+      line-height:1.65;
+      font-size:14px;
+    }
+    .hr{height:1px; background:rgba(255,255,255,.10); margin:14px 0;}
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:12px;
+      padding:2px 6px;
+      border-radius:10px;
+      background: rgba(31,111,235,.12);
+      border:1px solid rgba(31,111,235,.18);
+      color: rgba(232,238,247,.95);
+    }
+    ul{margin:8px 0 0 18px; color:var(--muted); line-height:1.7}
+    .footer{margin-top:16px; color:rgba(232,238,247,.55); font-size:12.5px; text-align:center;}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div>
+        <h1>AMS Desktop — FAQ</h1>
+        <p>Setup, networking, Docker services, and common fixes for Host/Client deployments.</p>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn" href="index.html">← Back to Download</a>
+        <a class="btn" href="#ports">Ports</a>
+        <a class="btn" href="#docker">Docker</a>
+      </div>
+    </header>
+
+    <section class="card">
+      <p class="q">What is AMS Desktop?</p>
+      <p class="a">
+        AMS Desktop is a desktop app where one computer can run as a <b>Host</b> (server) and other computers connect as
+        <b>Clients</b> on the same Wi-Fi. Clients can automatically discover the Host and share the same real-time workspace. :contentReference[oaicite:17]{index=17} :contentReference[oaicite:18]{index=18}
+      </p>
+      <div class="hr"></div>
+
+      <p class="q">What’s the difference between Host and Client?</p>
+      <p class="a">
+        <b>Host</b> runs backend services locally using Docker and creates the Organization + Admin during setup.
+        <b>Client</b> connects to the Host’s server URL (manually or via auto-discovery). :contentReference[oaicite:19]{index=19}
+      </p>
+    </section>
+
+    <section class="card" id="ports">
+      <p class="q">Which ports need to be open?</p>
+      <p class="a">
+        For clients to find and connect to the Host, the Host machine should allow:
+      </p>
+      <ul>
+        <li><code>UDP 49501</code> — LAN discovery broadcast</li>
+        <li><code>TCP 4000</code> — Rails API service</li>
+        <li><code>TCP 5001</code> — MediaConvert service</li>
+      </ul>
+      <p class="a">
+        Host mode can also attempt to set Windows Firewall rules automatically (with an Admin prompt). :contentReference[oaicite:20]{index=20} :contentReference[oaicite:21]{index=21}
+      </p>
+    </section>
+
+    <section class="card" id="docker">
+      <p class="q">Do all computers need Docker?</p>
+      <p class="a">
+        No. Typically only the <b>Host</b> needs Docker Desktop because it runs the backend services locally.
+        Clients connect over the network to the Host’s server. :contentReference[oaicite:22]{index=22}
+      </p>
+      <div class="hr"></div>
+
+      <p class="q">What services run on the Host?</p>
+      <p class="a">
+        The standard stack uses Docker Compose to run a Rails service on <code>:4000</code>, Postgres, Redis,
+        and a MediaConvert service on <code>:5001</code>. :contentReference[oaicite:23]{index=23}
+      </p>
+    </section>
+
+    <section class="card">
+      <p class="q">“No server found” when I click Find Server Automatically — what do I do?</p>
+      <p class="a">
+        Make sure:
+      </p>
+      <ul>
+        <li>The Host is running AMS Desktop in <b>Host mode</b>.</li>
+        <li>Both computers are on the <b>same Wi-Fi</b>.</li>
+        <li>Windows Firewall allows <code>UDP 49501</code> and the service ports <code>TCP 4000</code> / <code>TCP 5001</code>.</li>
+        <li>If needed, manually enter the Host URL in the client setup (example: <code>http://HOST_IP:4000</code>).</li>
+      </ul>
+      <p class="a">This matches the setup screen behavior for LAN scan + fallback manual URL entry. :contentReference[oaicite:24]{index=24}</p>
+    </section>
+
+    <section class="card">
+      <p class="q">How do I reset AMS Desktop back to the first-time setup?</p>
+      <p class="a">
+        On the Login screen, click <b>“Reset / Back to Setup”</b>. This clears host/client mode and server URL and returns you to setup. :contentReference[oaicite:25]{index=25}
+      </p>
+    </section>
+
+    <section class="card">
+      <p class="q">How does MediaConvert work in AMS Desktop?</p>
+      <p class="a">
+        AMS Desktop can start jobs and check job status through the local MediaConvert service on <code>http://127.0.0.1:5001</code>
+        (Host side). :contentReference[oaicite:26]{index=26}
+      </p>
+    </section>
+
+    <div class="footer">Powered by AMS Network © 2026</div>
+  </div>
+</body>
+</html>

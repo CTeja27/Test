@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AMS Desktop — Download</title>
+  <meta name="description" content="AMS Desktop is an organization-first desktop app that runs a local server (Host) and connects other computers (Clients) over the same Wi-Fi for real-time shared data." />
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#0f1722;
+      --panel2:#111c2b;
+      --text:#e8eef7;
+      --muted:rgba(232,238,247,.72);
+      --line:rgba(255,255,255,.10);
+      --brand:#1f6feb;
+      --brand2:#5aa2ff;
+      --good:#2ecc71;
+      --shadow: 0 18px 60px rgba(0,0,0,.35);
+      --radius:18px;
+      --max:1100px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background:
+        radial-gradient(1100px 600px at 20% -10%, rgba(31,111,235,.35), transparent 60%),
+        radial-gradient(900px 500px at 90% 10%, rgba(90,162,255,.25), transparent 55%),
+        radial-gradient(1000px 600px at 50% 120%, rgba(31,111,235,.18), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 70px;}
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      padding:14px 16px; border:1px solid var(--line); border-radius:var(--radius);
+      background:rgba(15,23,34,.65); backdrop-filter: blur(10px);
+      box-shadow: 0 8px 30px rgba(0,0,0,.22);
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px; min-width:220px;
+    }
+    .logo{
+      width:42px; height:42px; border-radius:14px;
+      background: linear-gradient(135deg, rgba(31,111,235,1), rgba(90,162,255,1));
+      box-shadow: 0 12px 30px rgba(31,111,235,.25);
+      display:grid; place-items:center; font-weight:900;
+      letter-spacing:.4px;
+      color:#07101b;
+    }
+    .brand h1{margin:0; font-size:16px; line-height:1.1;}
+    .brand p{margin:2px 0 0; color:var(--muted); font-size:12.5px}
+
+    nav{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;}
+    .navlink{
+      padding:9px 12px; border-radius:12px; border:1px solid transparent;
+      color:var(--muted); text-decoration:none; font-size:13px;
+    }
+    .navlink:hover{border-color:var(--line); color:var(--text); background:rgba(255,255,255,.04)}
+    .navlink.primary{color:var(--text); border-color:rgba(31,111,235,.45); background:rgba(31,111,235,.12)}
+    .navlink.primary:hover{background:rgba(31,111,235,.18)}
+
+    .hero{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: 1.35fr .65fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){ .hero{grid-template-columns:1fr;} }
+
+    .card{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:rgba(15,23,34,.70);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .heroMain{padding:26px 22px;}
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px; border-radius:999px;
+      border:1px solid rgba(31,111,235,.35);
+      background:rgba(31,111,235,.12);
+      color:rgba(232,238,247,.92);
+      font-size:12.5px; font-weight:700;
+      letter-spacing:.2px;
+    }
+    .kdot{
+      width:8px; height:8px; border-radius:99px;
+      background:var(--good);
+      box-shadow:0 0 0 5px rgba(46,204,113,.15);
+    }
+    .heroMain h2{
+      margin:12px 0 10px;
+      font-size:38px;
+      line-height:1.08;
+      letter-spacing:-.6px;
+    }
+    .heroMain p{
+      margin:0;
+      color:var(--muted);
+      font-size:15.5px;
+      line-height:1.6;
+      max-width: 62ch;
+    }
+    .ctaRow{
+      margin-top:18px;
+      display:flex; flex-wrap:wrap; gap:12px;
+      align-items:center;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      color:var(--text);
+      text-decoration:none;
+      font-weight:800;
+      font-size:14px;
+      cursor:pointer;
+      transition: .18s ease;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.07);}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(31,111,235,1), rgba(90,162,255,1));
+      border-color: rgba(255,255,255,.12);
+      color:#07101b;
+    }
+    .btn.primary:hover{filter:saturate(1.05); transform: translateY(-2px);}
+    .btn.ghost{
+      border-color: rgba(31,111,235,.45);
+      background: rgba(31,111,235,.10);
+    }
+    .btn small{font-weight:700; opacity:.85}
+    .subnote{
+      margin-top:10px;
+      color:rgba(232,238,247,.62);
+      font-size:12.5px;
+      line-height:1.45;
+    }
+
+    .heroSide{padding:18px 18px 20px;}
+    .sideTitle{margin:2px 0 10px; font-size:15px; font-weight:900;}
+    .miniList{display:flex; flex-direction:column; gap:10px;}
+    .miniItem{
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.12);
+    }
+    .miniItem b{display:block; font-size:13px; margin-bottom:4px}
+    .miniItem span{color:var(--muted); font-size:12.5px; line-height:1.35}
+    .pillRow{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
+    .pill{
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      font-size:12px;
+      color:rgba(232,238,247,.86);
+      font-weight:800;
+    }
+
+    .section{ margin-top:22px; padding:20px 18px; }
+    .section h3{ margin:0 0 10px; font-size:18px; letter-spacing:-.2px; }
+    .section p{ margin:0; color:var(--muted); line-height:1.65; font-size:14.5px }
+
+    .grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    @media (max-width: 950px){ .grid{grid-template-columns:1fr 1fr;} }
+    @media (max-width: 620px){ .grid{grid-template-columns:1fr;} }
+
+    .feat{
+      padding:16px 14px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.10);
+      min-height:120px;
+    }
+    .feat .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:11.5px; font-weight:900; letter-spacing:.2px;
+      padding:7px 10px; border-radius:999px;
+      border:1px solid rgba(31,111,235,.35);
+      background:rgba(31,111,235,.10);
+      color:rgba(232,238,247,.92);
+    }
+    .feat h4{margin:10px 0 6px; font-size:15px}
+    .feat p{margin:0; color:var(--muted); font-size:13.5px; line-height:1.55}
+
+    .how{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    @media (max-width: 900px){ .how{grid-template-columns:1fr;} }
+
+    .step{
+      padding:16px 14px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.10);
+    }
+    .num{
+      width:34px; height:34px; border-radius:12px;
+      background: rgba(31,111,235,.18);
+      border:1px solid rgba(31,111,235,.35);
+      display:grid; place-items:center;
+      font-weight:900;
+      color:rgba(232,238,247,.95);
+    }
+    .stephead{display:flex; align-items:center; gap:10px; margin-bottom:8px}
+    .step h4{margin:0; font-size:15px}
+    .kv{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns: 140px 1fr;
+      gap:8px 10px;
+      font-size:13.5px;
+      color:rgba(232,238,247,.75);
+    }
+    .kv b{color:rgba(232,238,247,.92)}
+    .kv code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:12px;
+      padding:2px 6px;
+      border-radius:10px;
+      background: rgba(31,111,235,.12);
+      border:1px solid rgba(31,111,235,.20);
+      color: rgba(232,238,247,.95);
+    }
+
+    .videoWrap{
+      position:relative;
+      padding-bottom:56.25%;
+      height:0;
+      overflow:hidden;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.15);
+      background: rgba(0,0,0,.20);
+      margin-top:12px;
+    }
+    .videoWrap iframe{
+      position:absolute; top:0; left:0;
+      width:100%; height:100%;
+      border:0;
+    }
+    .inlineActions{
+      margin-top:12px;
+      display:flex; flex-wrap:wrap; gap:10px;
+      align-items:center;
+    }
+
+    .footer{
+      margin-top:22px;
+      padding:18px 16px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background: rgba(15,23,34,.55);
+      color:rgba(232,238,247,.62);
+      font-size:12.5px;
+      display:flex; flex-wrap:wrap; gap:10px;
+      align-items:center; justify-content:space-between;
+    }
+    .footer a{color:rgba(232,238,247,.78); text-decoration:none}
+    .footer a:hover{text-decoration:underline}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">AMS</div>
+        <div>
+          <h1>AMS Desktop</h1>
+        </div>
+      </div>
+      <nav>
+        <a class="navlink" href="#features">Features</a>
+        <a class="navlink" href="#demo">Demo</a>
+        <a class="navlink" href="#how">How it works</a>
+        <a class="navlink" href="#requirements">Requirements</a>
+        <a class="navlink" href="faq.html">FAQ</a>
+        <a class="navlink primary" href="#download">Download</a>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="download">
+      <div class="card heroMain">
+        <div class="kicker"><span class="kdot"></span> Built for teams that need a simple, local, shared workspace</div>
+        <h2>Run your org’s workspace on one computer — connect the rest over Wi-Fi.</h2>
+        <p>
+          AMS Desktop lets one computer act as the <b>Host server</b> (runs the backend locally with Docker),
+          while other computers join as <b>Clients</b> and share the same real-time data.
+          The app includes built-in LAN discovery to find your Host automatically.
+        </p>
+
+        <div class="ctaRow">
+          <!-- Windows ZIP (Google Drive direct download) -->
+          <a class="btn primary"
+             href="https://drive.google.com/uc?export=download&id=1C7Byt9O398WFQhxzl8wG8HU-rcm9Vcsn">
+            ⬇ Download for Windows <small>(.zip)</small>
+          </a>
+
+          <!-- If/when you have mac later, replace the href -->
+          <a class="btn ghost"
+             href="#"
+             title="Add your macOS .dmg link here when ready">
+            ⬇ Download for macOS <small>(.dmg)</small>
+          </a>
+
+          <a class="btn" href="#demo">▶ Watch demo</a>
+        </div>
+
+        <div class="subnote">
+          Note: For large files, Google Drive may show “can’t scan for viruses” — just click <b>Download anyway</b>.
+        </div>
+      </div>
+
+      <aside class="card heroSide">
+        <div class="sideTitle">Quick highlights</div>
+        <div class="miniList">
+          <div class="miniItem">
+            <b>Host + Client setup</b>
+            <span>Choose Host (server) or Client on first launch. Clients can “Find Server Automatically.”</span>
+          </div>
+          <div class="miniItem">
+            <b>LAN discovery + firewall helper</b>
+            <span>Auto-discovery uses UDP broadcast; host can open required ports with one prompt.</span>
+          </div>
+          <div class="miniItem">
+            <b>MediaConvert service</b>
+            <span>Built-in job start/status flow for transcoding workflows.</span>
+          </div>
+        </div>
+
+        <div class="pillRow">
+          <span class="pill">Host/Client</span>
+          <span class="pill">LAN Auto-Find</span>
+          <span class="pill">Real-time</span>
+          <span class="pill">Projects</span>
+          <span class="pill">Campaigns</span>
+          <span class="pill">Billing</span>
+        </div>
+      </aside>
+    </section>
+
+    <!-- DEMO VIDEO -->
+    <section class="card section" id="demo">
+      <h3>Watch the demo</h3>
+      <p>
+        A quick walkthrough showing setup, Host + Client connection, and the AMS Desktop workspace in action.
+      </p>
+
+      <div class="videoWrap">
+        <iframe
+  src="https://www.youtube-nocookie.com/embed/xtrO9M768fA?rel=0&modestbranding=1"
+  title="AMS Desktop Demo"
+  loading="lazy"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen></iframe>
+
+      </div>
+
+      <div class="inlineActions">
+        <a class="btn ghost" href="https://youtu.be/xtrO9M768fA" target="_blank" rel="noopener">
+          ▶ Watch on YouTube
+        </a>
+        <a class="btn" href="#download">⬇ Download now</a>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="card section" id="features">
+      <h3>Core features</h3>
+      <p>
+        AMS Desktop is designed as a shared, organization-first workspace. Here’s what teams typically manage inside the app.
+      </p>
+
+      <div class="grid">
+        <div class="feat">
+          <div class="tag">Dashboard</div>
+          <h4>At-a-glance overview</h4>
+          <p>See a quick snapshot of activity across modules and your organization context.</p>
+        </div>
+
+        <div class="feat">
+          <div class="tag">Members</div>
+          <h4>Team directory</h4>
+          <p>Keep your team organized with a shared view of users and collaboration.</p>
+        </div>
+
+        <div class="feat">
+          <div class="tag">Projects</div>
+          <h4>Project tracking</h4>
+          <p>Create, organize, and manage projects in a shared workspace.</p>
+        </div>
+
+        <div class="feat">
+          <div class="tag">Campaigns</div>
+          <h4>Campaign workflows</h4>
+          <p>Plan and manage campaigns that connect to applications and forms.</p>
+        </div>
+
+        <div class="feat">
+          <div class="tag">Applications</div>
+          <h4>Application intake</h4>
+          <p>Track incoming applications and keep statuses consistent for your team.</p>
+        </div>
+
+        <div class="feat">
+          <div class="tag">Programs</div>
+          <h4>Scheduling</h4>
+          <p>Manage program entries and schedules in a structured workflow.</p>
+        </div>
+
+        <div class="feat">
+          <div class="tag">Billing & Payments</div>
+          <h4>Invoices + statuses</h4>
+          <p>Create billing items and mark payment status with clarity.</p>
+        </div>
+
+        <div class="feat">
+          <div class="tag">Reports</div>
+          <h4>Summaries</h4>
+          <p>Quick summary views to support decisions and track progress.</p>
+        </div>
+
+        <div class="feat">
+          <div class="tag">MediaConvert</div>
+          <h4>Transcoding jobs</h4>
+          <p>Start and monitor transcoding jobs via the MediaConvert service.</p>
+        </div>
+
+        <div class="feat">
+          <div class="tag">Submissions</div>
+          <h4>Structured entries</h4>
+          <p>Log submissions with a clear status trail for your organization.</p>
+        </div>
+
+        <div class="feat">
+          <div class="tag">Donations</div>
+          <h4>Donation tracking</h4>
+          <p>Record donations and maintain visibility into donor activity.</p>
+        </div>
+
+        <div class="feat">
+          <div class="tag">System</div>
+          <h4>Settings + health</h4>
+          <p>Tools and configuration to keep the Host and services running smoothly.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="card section" id="how">
+      <h3>How it works (Host + Client)</h3>
+      <p>
+        On first launch, choose whether a computer is the <b>Host</b> or a <b>Client</b>. Clients can scan the LAN to
+        auto-fill the Host server URL, or enter it manually.
+      </p>
+
+      <div class="how">
+        <div class="step">
+          <div class="stephead"><div class="num">1</div><h4>Choose Host or Client</h4></div>
+          <p>
+            Host runs the backend locally (Docker). Client connects to the Host URL and shares the same data.
+          </p>
+          <div class="kv">
+            <b>Host</b><span>Runs backend services</span>
+            <b>Client</b><span>Connects to Host URL</span>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="stephead"><div class="num">2</div><h4>Auto-find the Host on Wi-Fi</h4></div>
+          <p>
+            Clients can click “Find Server Automatically” to detect the host on your local network.
+          </p>
+          <div class="kv">
+            <b>Discovery</b><span><code>UDP 49501</code> broadcast</span>
+            <b>Result</b><span>Auto-fills server URL</span>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="stephead"><div class="num">3</div><h4>Services run on the Host</h4></div>
+          <p>
+            Rails API, database, cache, and MediaConvert service run locally on the Host.
+          </p>
+          <div class="kv">
+            <b>Rails API</b><span><code>TCP 4000</code></span>
+            <b>MediaConvert</b><span><code>TCP 5001</code></span>
+            <b>Data</b><span>Postgres + Redis</span>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="stephead"><div class="num">4</div><h4>Firewall rules (Host)</h4></div>
+          <p>
+            Allow discovery + service ports on the Host firewall so Clients can connect.
+          </p>
+          <div class="kv">
+            <b>Ports</b><span><code>UDP 49501</code> • <code>TCP 4000</code> • <code>TCP 5001</code></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REQUIREMENTS -->
+    <section class="card section" id="requirements">
+      <h3>System requirements</h3>
+      <p>Recommended for smooth Host + Client deployments.</p>
+
+      <div class="grid" style="margin-top:14px;">
+        <div class="feat">
+          <div class="tag">Host machine</div>
+          <h4>Docker Desktop</h4>
+          <p>Only the Host typically needs Docker to run backend services locally.</p>
+        </div>
+        <div class="feat">
+          <div class="tag">Network</div>
+          <h4>Same Wi-Fi/LAN</h4>
+          <p>Clients must be on the same network as the Host for auto-discovery to work.</p>
+        </div>
+        <div class="feat">
+          <div class="tag">Ports</div>
+          <h4>Open Host ports</h4>
+          <p>Allow UDP 49501 and TCP 4000/5001 on the Host firewall.</p>
+        </div>
+      </div>
+
+      <p style="margin-top:14px;">
+        Need help? Open the <b>FAQ</b> for troubleshooting and setup tips.
+      </p>
+
+      <div class="inlineActions">
+        <a class="btn ghost" href="faq.html">📘 Open FAQ</a>
+        <a class="btn" href="#download">⬇ Download</a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div>Powered by AMS Network © 2026</div>
+      <div style="display:flex; gap:14px; flex-wrap:wrap;">
+        <a href="faq.html">FAQ</a>
+        <a href="#demo">Demo</a>
+        <a href="#download">Download</a>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>
