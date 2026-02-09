@@ -2,117 +2,203 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>AMS Desktop — Download</title>
-  <meta name="description" content="AMS Desktop is an organization-first desktop app that runs a local server (Host) and connects other computers (Clients) over the same Wi-Fi for real-time shared data." />
+  <meta name="description" content="AMS Desktop is a local-first management workspace for arts organizations. One Host runs the services, Clients connect over Wi-Fi/LAN for real-time shared data." />
+  <meta name="theme-color" content="#0b0f14" />
+
   <style>
     :root{
-      --bg:#0b0f14;
-      --panel:#0f1722;
-      --panel2:#111c2b;
-      --text:#e8eef7;
-      --muted:rgba(232,238,247,.72);
-      --line:rgba(255,255,255,.10);
-      --brand:#1f6feb;
-      --brand2:#5aa2ff;
-      --good:#2ecc71;
-      --shadow: 0 18px 60px rgba(0,0,0,.35);
-      --radius:18px;
-      --max:1100px;
+      --bg0:#070a10;
+      --bg1:#0b0f14;
+
+      --panel: rgba(16, 24, 40, .62);
+      --panel2: rgba(12, 18, 32, .58);
+      --glass: rgba(12, 18, 32, .55);
+
+      --text:#eaf0ff;
+      --muted: rgba(234,240,255,.72);
+      --faint: rgba(234,240,255,.56);
+
+      --line: rgba(255,255,255,.10);
+      --line2: rgba(255,255,255,.14);
+
+      --brand:#5aa2ff;
+      --brand2:#1f6feb;
+      --good:#31d68b;
+
+      --shadow: 0 26px 90px rgba(0,0,0,.55);
+      --shadow2: 0 16px 46px rgba(0,0,0,.36);
+
+      --radius: 22px;
+      --radius2: 16px;
+
+      --max: 1120px;
+
+      --h1: clamp(36px, 4.6vw, 58px);
+      --h2: clamp(18px, 2.3vw, 22px);
+      --p: 15.6px;
     }
 
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      background:
-        radial-gradient(1100px 600px at 20% -10%, rgba(31,111,235,.35), transparent 60%),
-        radial-gradient(900px 500px at 90% 10%, rgba(90,162,255,.25), transparent 55%),
-        radial-gradient(1000px 600px at 50% 120%, rgba(31,111,235,.18), transparent 60%),
-        var(--bg);
       color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 18% -12%, rgba(90,162,255,.36), transparent 55%),
+        radial-gradient(900px 520px at 90% 10%, rgba(31,111,235,.26), transparent 55%),
+        radial-gradient(1200px 700px at 50% 120%, rgba(90,162,255,.12), transparent 58%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     a{color:inherit}
     .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 70px;}
+
+    .bgGrid{
+      position:fixed; inset:-2px;
+      pointer-events:none;
+      opacity:.26;
+      background:
+        linear-gradient(to right, rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 62px 62px;
+      mask-image: radial-gradient(900px 540px at 50% 0%, rgba(0,0,0,1), transparent 75%);
+      z-index:-1;
+    }
+
+    /* Topbar */
     .topbar{
       display:flex; align-items:center; justify-content:space-between; gap:14px;
-      padding:14px 16px; border:1px solid var(--line); border-radius:var(--radius);
-      background:rgba(15,23,34,.65); backdrop-filter: blur(10px);
-      box-shadow: 0 8px 30px rgba(0,0,0,.22);
+      padding:14px 16px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: var(--shadow2);
+      position: sticky;
+      top: 14px;
+      z-index: 20;
     }
     .brand{
-      display:flex; align-items:center; gap:12px; min-width:220px;
+      display:flex; align-items:center; gap:12px;
+      min-width:260px;
     }
     .logo{
       width:42px; height:42px; border-radius:14px;
-      background: linear-gradient(135deg, rgba(31,111,235,1), rgba(90,162,255,1));
-      box-shadow: 0 12px 30px rgba(31,111,235,.25);
-      display:grid; place-items:center; font-weight:900;
-      letter-spacing:.4px;
+      background: linear-gradient(135deg, rgba(90,162,255,1), rgba(31,111,235,1));
+      box-shadow: 0 14px 34px rgba(90,162,255,.22);
+      display:grid; place-items:center;
+      font-weight:950;
+      letter-spacing:.5px;
       color:#07101b;
+      user-select:none;
     }
-    .brand h1{margin:0; font-size:16px; line-height:1.1;}
+    .brand h1{margin:0; font-size:14px; line-height:1.1; font-weight:950; letter-spacing:.2px;}
     .brand p{margin:2px 0 0; color:var(--muted); font-size:12.5px}
 
-    nav{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;}
+    nav{display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; align-items:center;}
     .navlink{
-      padding:9px 12px; border-radius:12px; border:1px solid transparent;
-      color:var(--muted); text-decoration:none; font-size:13px;
+      padding:9px 11px;
+      border-radius:12px;
+      border:1px solid transparent;
+      color:rgba(234,240,255,.72);
+      text-decoration:none;
+      font-size:13px;
+      font-weight:800;
+      transition:.16s ease;
+      white-space:nowrap;
     }
-    .navlink:hover{border-color:var(--line); color:var(--text); background:rgba(255,255,255,.04)}
-    .navlink.primary{color:var(--text); border-color:rgba(31,111,235,.45); background:rgba(31,111,235,.12)}
-    .navlink.primary:hover{background:rgba(31,111,235,.18)}
-
-    .hero{
-      margin-top:18px;
-      display:grid;
-      grid-template-columns: 1.35fr .65fr;
-      gap:18px;
-      align-items:stretch;
+    .navlink:hover{
+      border-color: var(--line);
+      background: rgba(255,255,255,.045);
+      color: var(--text);
+      transform: translateY(-1px);
     }
-    @media (max-width: 900px){ .hero{grid-template-columns:1fr;} }
+    .navlink.primary{
+      color:#07101b;
+      border-color: rgba(255,255,255,.16);
+      background: linear-gradient(135deg, rgba(90,162,255,1), rgba(31,111,235,1));
+      box-shadow: 0 10px 28px rgba(31,111,235,.18);
+    }
 
+    /* Card */
     .card{
       border:1px solid var(--line);
       border-radius:var(--radius);
-      background:rgba(15,23,34,.70);
-      backdrop-filter: blur(10px);
+      background: var(--panel);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       box-shadow: var(--shadow);
       overflow:hidden;
+      position:relative;
     }
-    .heroMain{padding:26px 22px;}
+    .card:before{
+      content:"";
+      position:absolute; inset:-1px;
+      border-radius: inherit;
+      padding:1px;
+      background: linear-gradient(135deg, rgba(90,162,255,.42), rgba(31,111,235,.22), rgba(255,255,255,.10));
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events:none;
+      opacity:.55;
+    }
+
+    /* Hero */
+    .hero{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: 1.45fr .55fr;
+      gap:16px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){ .hero{grid-template-columns:1fr;} }
+
+    .heroMain{padding:28px 22px 22px;}
     .kicker{
       display:inline-flex; align-items:center; gap:10px;
-      padding:8px 12px; border-radius:999px;
-      border:1px solid rgba(31,111,235,.35);
-      background:rgba(31,111,235,.12);
-      color:rgba(232,238,247,.92);
-      font-size:12.5px; font-weight:700;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(90,162,255,.28);
+      background: rgba(90,162,255,.10);
+      color: rgba(234,240,255,.92);
+      font-size:12.5px;
+      font-weight:950;
       letter-spacing:.2px;
     }
     .kdot{
-      width:8px; height:8px; border-radius:99px;
-      background:var(--good);
-      box-shadow:0 0 0 5px rgba(46,204,113,.15);
+      width:8px; height:8px; border-radius:999px;
+      background: var(--good);
+      box-shadow: 0 0 0 6px rgba(49,214,139,.14);
     }
-    .heroMain h2{
-      margin:12px 0 10px;
-      font-size:38px;
-      line-height:1.08;
-      letter-spacing:-.6px;
+
+    .heroTitle{
+      margin:14px 0 10px;
+      font-size: var(--h1);
+      line-height:1.03;
+      letter-spacing:-.9px;
+      font-weight:950;
     }
-    .heroMain p{
+    .heroSub{
       margin:0;
-      color:var(--muted);
-      font-size:15.5px;
-      line-height:1.6;
-      max-width: 62ch;
+      color: var(--muted);
+      font-size: var(--p);
+      line-height:1.75;
+      max-width: 70ch;
     }
+
     .ctaRow{
       margin-top:18px;
-      display:flex; flex-wrap:wrap; gap:12px;
+      display:flex; flex-wrap:wrap; gap:10px;
       align-items:center;
     }
     .btn{
@@ -120,88 +206,184 @@
       padding:12px 14px;
       border-radius:14px;
       border:1px solid var(--line);
-      background: rgba(255,255,255,.05);
-      color:var(--text);
+      background: rgba(255,255,255,.045);
+      color: var(--text);
       text-decoration:none;
-      font-weight:800;
+      font-weight:950;
       font-size:14px;
       cursor:pointer;
-      transition: .18s ease;
+      transition: .16s ease;
       user-select:none;
       white-space:nowrap;
     }
-    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.07);}
+    .btn:hover{transform: translateY(-2px); background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.16);}
     .btn.primary{
-      background: linear-gradient(135deg, rgba(31,111,235,1), rgba(90,162,255,1));
-      border-color: rgba(255,255,255,.12);
       color:#07101b;
+      border-color: rgba(255,255,255,.18);
+      background: linear-gradient(135deg, rgba(90,162,255,1), rgba(31,111,235,1));
+      box-shadow: 0 14px 40px rgba(31,111,235,.20);
     }
-    .btn.primary:hover{filter:saturate(1.05); transform: translateY(-2px);}
     .btn.ghost{
-      border-color: rgba(31,111,235,.45);
-      background: rgba(31,111,235,.10);
+      border-color: rgba(90,162,255,.32);
+      background: rgba(90,162,255,.08);
     }
-    .btn small{font-weight:700; opacity:.85}
+    .btn small{font-weight:950; opacity:.9}
+
     .subnote{
-      margin-top:10px;
-      color:rgba(232,238,247,.62);
-      font-size:12.5px;
-      line-height:1.45;
+      margin-top:12px;
+      color: rgba(234,240,255,.58);
+      font-size:12.6px;
+      line-height:1.5;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+    }
+    .subnote .info{
+      width:18px; height:18px; border-radius:6px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      display:grid; place-items:center;
+      font-weight:950;
+      color: rgba(234,240,255,.85);
+      flex: 0 0 auto;
+      margin-top:1px;
     }
 
-    .heroSide{padding:18px 18px 20px;}
-    .sideTitle{margin:2px 0 10px; font-size:15px; font-weight:900;}
+    /* Side */
+    .heroSide{padding:18px 18px 18px; background: var(--panel2);}
+    .sideTitle{margin:2px 0 10px; font-size:14px; font-weight:950; letter-spacing:.2px;}
     .miniList{display:flex; flex-direction:column; gap:10px;}
     .miniItem{
       padding:12px 12px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.08);
-      background: rgba(0,0,0,.12);
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.09);
+      background: rgba(0,0,0,.14);
     }
-    .miniItem b{display:block; font-size:13px; margin-bottom:4px}
-    .miniItem span{color:var(--muted); font-size:12.5px; line-height:1.35}
+    .miniItem b{display:block; font-size:13px; margin-bottom:4px; font-weight:950;}
+    .miniItem span{color:var(--muted); font-size:12.7px; line-height:1.4}
     .pillRow{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
     .pill{
       padding:7px 10px;
       border-radius:999px;
-      background:rgba(255,255,255,.06);
+      background: rgba(255,255,255,.055);
       border:1px solid rgba(255,255,255,.08);
       font-size:12px;
-      color:rgba(232,238,247,.86);
-      font-weight:800;
+      color: rgba(234,240,255,.86);
+      font-weight:950;
+      letter-spacing:.1px;
     }
 
-    .section{ margin-top:22px; padding:20px 18px; }
-    .section h3{ margin:0 0 10px; font-size:18px; letter-spacing:-.2px; }
-    .section p{ margin:0; color:var(--muted); line-height:1.65; font-size:14.5px }
+    /* Section */
+    .section{ margin-top:18px; padding:20px 18px; }
+    .section h3{ margin:0 0 10px; font-size:18px; letter-spacing:-.25px; font-weight:950;}
+    .section p{ margin:0; color:var(--muted); line-height:1.75; font-size:14.6px }
 
+    /* Benefits (white section like your screenshot but in premium style) */
+    .benefitsWrap{
+      margin-top:18px;
+      border-radius: var(--radius);
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(245,248,255,.98));
+      color: #0b1220;
+      box-shadow: 0 18px 60px rgba(0,0,0,.28);
+      position:relative;
+    }
+    .benefitsTop{
+      padding:26px 18px 10px;
+      text-align:center;
+    }
+    .benefitsKicker{
+      font-size:12px;
+      letter-spacing:.22em;
+      font-weight:900;
+      color: rgba(11,18,32,.55);
+      text-transform: uppercase;
+    }
+    .benefitsTitle{
+      margin:10px 0 0;
+      font-size: clamp(26px, 3.2vw, 38px);
+      letter-spacing:.06em;
+      font-weight:950;
+    }
+
+    .benefitsGrid{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      padding: 18px 16px 26px;
+    }
+    @media (max-width: 980px){ .benefitsGrid{grid-template-columns:1fr 1fr;} }
+    @media (max-width: 560px){ .benefitsGrid{grid-template-columns:1fr;} }
+
+    .benefit{
+      padding: 14px 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.84);
+      border: 1px solid rgba(11,18,32,.08);
+      text-align:center;
+    }
+    .benefitIcon{
+      width: 66px; height: 66px;
+      border-radius: 999px;
+      margin: 6px auto 10px;
+      display:grid; place-items:center;
+      background: radial-gradient(circle at 30% 30%, rgba(90,162,255,.35), rgba(31,111,235,.15));
+      border: 1px solid rgba(31,111,235,.18);
+    }
+    .benefitIcon svg{width:34px; height:34px; fill: #1f6feb;}
+    .benefit h4{
+      margin: 6px 0 6px;
+      font-size: 15px;
+      font-weight: 950;
+      letter-spacing: -.2px;
+      color:#0b1220;
+    }
+    .benefit p{
+      margin:0;
+      font-size: 13.6px;
+      line-height:1.6;
+      color: rgba(11,18,32,.70);
+    }
+
+    /* Grid blocks */
     .grid{
       margin-top:14px;
       display:grid;
       grid-template-columns: repeat(3, 1fr);
       gap:12px;
     }
-    @media (max-width: 950px){ .grid{grid-template-columns:1fr 1fr;} }
-    @media (max-width: 620px){ .grid{grid-template-columns:1fr;} }
+    @media (max-width: 980px){ .grid{grid-template-columns:1fr 1fr;} }
+    @media (max-width: 640px){ .grid{grid-template-columns:1fr;} }
 
     .feat{
       padding:16px 14px;
-      border-radius:16px;
+      border-radius:18px;
       border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.10);
+      background: rgba(0,0,0,.12);
       min-height:120px;
+      transition: .16s ease;
     }
-    .feat .tag{
+    .feat:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,.16);
+      background: rgba(0,0,0,.16);
+    }
+    .tag{
       display:inline-flex; align-items:center; gap:8px;
-      font-size:11.5px; font-weight:900; letter-spacing:.2px;
-      padding:7px 10px; border-radius:999px;
-      border:1px solid rgba(31,111,235,.35);
-      background:rgba(31,111,235,.10);
-      color:rgba(232,238,247,.92);
+      font-size:11.6px;
+      font-weight:950;
+      letter-spacing:.25px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(90,162,255,.28);
+      background: rgba(90,162,255,.08);
+      color: rgba(234,240,255,.92);
     }
-    .feat h4{margin:10px 0 6px; font-size:15px}
-    .feat p{margin:0; color:var(--muted); font-size:13.5px; line-height:1.55}
+    .feat h4{margin:10px 0 6px; font-size:15px; font-weight:950;}
+    .feat p{margin:0; color:var(--muted); font-size:13.7px; line-height:1.6}
 
+    /* How */
     .how{
       margin-top:14px;
       display:grid;
@@ -209,95 +391,97 @@
       gap:12px;
     }
     @media (max-width: 900px){ .how{grid-template-columns:1fr;} }
-
     .step{
       padding:16px 14px;
-      border-radius:16px;
+      border-radius:18px;
       border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.10);
-    }
-    .num{
-      width:34px; height:34px; border-radius:12px;
-      background: rgba(31,111,235,.18);
-      border:1px solid rgba(31,111,235,.35);
-      display:grid; place-items:center;
-      font-weight:900;
-      color:rgba(232,238,247,.95);
+      background: rgba(0,0,0,.12);
     }
     .stephead{display:flex; align-items:center; gap:10px; margin-bottom:8px}
-    .step h4{margin:0; font-size:15px}
+    .num{
+      width:34px; height:34px; border-radius:12px;
+      background: rgba(90,162,255,.12);
+      border:1px solid rgba(90,162,255,.22);
+      display:grid; place-items:center;
+      font-weight:950;
+      color: rgba(234,240,255,.95);
+    }
     .kv{
       margin-top:10px;
       display:grid;
-      grid-template-columns: 140px 1fr;
+      grid-template-columns: 150px 1fr;
       gap:8px 10px;
-      font-size:13.5px;
-      color:rgba(232,238,247,.75);
+      font-size:13.6px;
+      color: rgba(234,240,255,.72);
     }
-    .kv b{color:rgba(232,238,247,.92)}
+    .kv b{color: rgba(234,240,255,.92); font-weight:950;}
     .kv code{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       font-size:12px;
-      padding:2px 6px;
+      padding:2px 7px;
       border-radius:10px;
-      background: rgba(31,111,235,.12);
-      border:1px solid rgba(31,111,235,.20);
-      color: rgba(232,238,247,.95);
+      background: rgba(90,162,255,.10);
+      border:1px solid rgba(90,162,255,.18);
+      color: rgba(234,240,255,.95);
+      white-space: nowrap;
     }
 
+    /* Video */
     .videoWrap{
       position:relative;
       padding-bottom:56.25%;
       height:0;
       overflow:hidden;
-      border-radius:16px;
+      border-radius:18px;
       border:1px solid rgba(255,255,255,.15);
       background: rgba(0,0,0,.20);
       margin-top:12px;
     }
-    .videoWrap iframe{
-      position:absolute; top:0; left:0;
-      width:100%; height:100%;
-      border:0;
-    }
-    .inlineActions{
-      margin-top:12px;
-      display:flex; flex-wrap:wrap; gap:10px;
-      align-items:center;
-    }
+    .videoWrap iframe{position:absolute; inset:0; width:100%; height:100%; border:0;}
+    .inlineActions{margin-top:12px; display:flex; flex-wrap:wrap; gap:10px; align-items:center;}
 
+    /* Footer */
     .footer{
-      margin-top:22px;
-      padding:18px 16px;
+      margin-top:18px;
+      padding:16px 16px;
       border:1px solid var(--line);
       border-radius:var(--radius);
-      background: rgba(15,23,34,.55);
-      color:rgba(232,238,247,.62);
-      font-size:12.5px;
+      background: rgba(12, 18, 32, .45);
+      color: rgba(234,240,255,.62);
+      font-size:12.6px;
       display:flex; flex-wrap:wrap; gap:10px;
       align-items:center; justify-content:space-between;
     }
-    .footer a{color:rgba(232,238,247,.78); text-decoration:none}
+    .footer a{color: rgba(234,240,255,.78); text-decoration:none; font-weight:850;}
     .footer a:hover{text-decoration:underline}
+
+    @media (prefers-reduced-motion: reduce){
+      *{transition:none !important}
+      html{scroll-behavior:auto}
+    }
   </style>
 </head>
 
 <body>
+  <div class="bgGrid" aria-hidden="true"></div>
+
   <div class="wrap">
 
     <!-- TOP BAR -->
     <header class="topbar">
       <div class="brand">
-        <div class="logo">AMS</div>
+        <div class="logo" aria-hidden="true">AMS</div>
         <div>
           <h1>AMS Desktop</h1>
+          <p>Inspired by AMS Network • Management software for arts organizations</p>
         </div>
       </div>
-      <nav>
+
+      <nav aria-label="Primary">
+        <a class="navlink" href="#benefits">Benefits</a>
         <a class="navlink" href="#features">Features</a>
         <a class="navlink" href="#demo">Demo</a>
         <a class="navlink" href="#how">How it works</a>
-        <a class="navlink" href="#requirements">Requirements</a>
         <a class="navlink" href="faq.html">FAQ</a>
         <a class="navlink primary" href="#download">Download</a>
       </nav>
@@ -306,12 +490,13 @@
     <!-- HERO -->
     <section class="hero" id="download">
       <div class="card heroMain">
-        <div class="kicker"><span class="kdot"></span> Built for teams that need a simple, local, shared workspace</div>
-        <h2>Run your org’s workspace on one computer — connect the rest over Wi-Fi.</h2>
-        <p>
-          AMS Desktop lets one computer act as the <b>Host server</b> (runs the backend locally with Docker),
-          while other computers join as <b>Clients</b> and share the same real-time data.
-          The app includes built-in LAN discovery to find your Host automatically.
+        <div class="kicker"><span class="kdot" aria-hidden="true"></span> Local-first workspace • Real-time sharing over Wi-Fi/LAN</div>
+
+        <div class="heroTitle">A modern management workspace for arts organizations.</div>
+
+        <p class="heroSub">
+          AMS Desktop is inspired by <b>AMS Network</b> — built for organizations that want a clean, shared system without complex setup.
+          One computer becomes the <b>Host</b> (runs services locally), and other computers join as <b>Clients</b> to work on the same data in real time.
         </p>
 
         <div class="ctaRow">
@@ -321,7 +506,7 @@
             ⬇ Download for Windows <small>(.zip)</small>
           </a>
 
-          <!-- If/when you have mac later, replace the href -->
+          <!-- mac placeholder -->
           <a class="btn ghost"
              href="#"
              title="Add your macOS .dmg link here when ready">
@@ -332,60 +517,104 @@
         </div>
 
         <div class="subnote">
-          Note: For large files, Google Drive may show “can’t scan for viruses” — just click <b>Download anyway</b>.
+          <div class="info" aria-hidden="true">i</div>
+          <div>
+            For large files, Google Drive may show “can’t scan for viruses” — click <b>Download anyway</b>.
+          </div>
         </div>
       </div>
 
       <aside class="card heroSide">
-        <div class="sideTitle">Quick highlights</div>
+        <div class="sideTitle">What you get</div>
         <div class="miniList">
           <div class="miniItem">
-            <b>Host + Client setup</b>
-            <span>Choose Host (server) or Client on first launch. Clients can “Find Server Automatically.”</span>
+            <b>Fast setup for teams</b>
+            <span>Pick Host or Client on first launch. Clients can auto-find the Host on your network.</span>
           </div>
           <div class="miniItem">
-            <b>LAN discovery + firewall helper</b>
-            <span>Auto-discovery uses UDP broadcast; host can open required ports with one prompt.</span>
+            <b>Shared org workspace</b>
+            <span>Projects, campaigns, applications, billing, reports — all in one system.</span>
           </div>
           <div class="miniItem">
-            <b>MediaConvert service</b>
-            <span>Built-in job start/status flow for transcoding workflows.</span>
+            <b>MediaConvert workflows</b>
+            <span>Start and monitor transcoding jobs (Host runs the service, team sees the status).</span>
           </div>
         </div>
 
-        <div class="pillRow">
-          <span class="pill">Host/Client</span>
-          <span class="pill">LAN Auto-Find</span>
-          <span class="pill">Real-time</span>
+        <div class="pillRow" aria-label="Highlights">
+          <span class="pill">Membership</span>
           <span class="pill">Projects</span>
           <span class="pill">Campaigns</span>
           <span class="pill">Billing</span>
+          <span class="pill">Reporting</span>
+          <span class="pill">MediaConvert</span>
         </div>
       </aside>
     </section>
 
-    <!-- DEMO VIDEO -->
+    <!-- BENEFITS (like your screenshot) -->
+    <section class="benefitsWrap" id="benefits" aria-label="Benefits">
+      <div class="benefitsTop">
+        <div class="benefitsKicker">SAVE TIME AND FOCUS ON YOUR MEMBERS</div>
+        <div class="benefitsTitle">BENEFITS</div>
+      </div>
+
+      <div class="benefitsGrid">
+        <div class="benefit">
+          <div class="benefitIcon" aria-hidden="true">
+            <!-- users -->
+            <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 3-1.34 3-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.67 0-8 1.34-8 4v2h10v-2c0-1.54.82-2.88 2.06-3.84C10.93 13.39 9.27 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 2.05 1.97 3.45v2H24v-2c0-2.66-5.33-4-8-4z"/></svg>
+          </div>
+          <h4>Membership</h4>
+          <p>Keep member details, contact info, renewals, and statuses in one place — always consistent for the team.</p>
+        </div>
+
+        <div class="benefit">
+          <div class="benefitIcon" aria-hidden="true">
+            <!-- camera -->
+            <svg viewBox="0 0 24 24"><path d="M9 2l1.83 2H14l1.83-2H19c1.1 0 2 .9 2 2v16c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h4zm3 6a6 6 0 100 12 6 6 0 000-12zm0 2a4 4 0 110 8 4 4 0 010-8z"/></svg>
+          </div>
+          <h4>Equipment & Facilities</h4>
+          <p>Track gear, locations, usage, and repairs so your organization stays organized and accountable.</p>
+        </div>
+
+        <div class="benefit">
+          <div class="benefitIcon" aria-hidden="true">
+            <!-- play -->
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm-2 14.5v-9l7 4.5z"/></svg>
+          </div>
+          <h4>Projects & Media</h4>
+          <p>Manage projects, submissions, and media workflows — with MediaConvert job tracking built into the Host.</p>
+        </div>
+
+        <div class="benefit">
+          <div class="benefitIcon" aria-hidden="true">
+            <!-- document -->
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8zm0 2l6 6h-6zM8 13h8v2H8zm0 4h8v2H8zm0-8h5v2H8z"/></svg>
+          </div>
+          <h4>Reporting</h4>
+          <p>Generate clear summaries to support decisions, funding applications, and internal organization reporting.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEMO -->
     <section class="card section" id="demo">
       <h3>Watch the demo</h3>
-      <p>
-        A quick walkthrough showing setup, Host + Client connection, and the AMS Desktop workspace in action.
-      </p>
+      <p>A quick walkthrough showing setup, Host + Client connection, and the AMS Desktop workspace in action.</p>
 
       <div class="videoWrap">
         <iframe
-  src="https://www.youtube-nocookie.com/embed/xtrO9M768fA?rel=0&modestbranding=1"
-  title="AMS Desktop Demo"
-  loading="lazy"
-  referrerpolicy="strict-origin-when-cross-origin"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  allowfullscreen></iframe>
-
+          src="https://www.youtube-nocookie.com/embed/xtrO9M768fA?rel=0&modestbranding=1"
+          title="AMS Desktop Demo"
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
       </div>
 
       <div class="inlineActions">
-        <a class="btn ghost" href="https://youtu.be/xtrO9M768fA" target="_blank" rel="noopener">
-          ▶ Watch on YouTube
-        </a>
+        <a class="btn ghost" href="https://youtu.be/xtrO9M768fA" target="_blank" rel="noopener">▶ Watch on YouTube</a>
         <a class="btn" href="#download">⬇ Download now</a>
       </div>
     </section>
@@ -393,81 +622,53 @@
     <!-- FEATURES -->
     <section class="card section" id="features">
       <h3>Core features</h3>
-      <p>
-        AMS Desktop is designed as a shared, organization-first workspace. Here’s what teams typically manage inside the app.
-      </p>
+      <p>Everything your organization needs to manage operations — designed to be clean, fast, and shared across your team.</p>
 
       <div class="grid">
         <div class="feat">
-          <div class="tag">Dashboard</div>
-          <h4>At-a-glance overview</h4>
-          <p>See a quick snapshot of activity across modules and your organization context.</p>
+          <div class="tag">Membership</div>
+          <h4>Member directory</h4>
+          <p>Track members, contact info, and organization people in one shared workspace.</p>
         </div>
-
-        <div class="feat">
-          <div class="tag">Members</div>
-          <h4>Team directory</h4>
-          <p>Keep your team organized with a shared view of users and collaboration.</p>
-        </div>
-
         <div class="feat">
           <div class="tag">Projects</div>
           <h4>Project tracking</h4>
-          <p>Create, organize, and manage projects in a shared workspace.</p>
+          <p>Create and manage projects your team works on together — with consistent statuses.</p>
         </div>
-
         <div class="feat">
           <div class="tag">Campaigns</div>
           <h4>Campaign workflows</h4>
-          <p>Plan and manage campaigns that connect to applications and forms.</p>
+          <p>Plan campaigns and keep everything aligned with applications and submissions.</p>
         </div>
-
         <div class="feat">
           <div class="tag">Applications</div>
-          <h4>Application intake</h4>
-          <p>Track incoming applications and keep statuses consistent for your team.</p>
+          <h4>Intake + status flow</h4>
+          <p>Track applications and move them through a clear workflow the whole team sees.</p>
         </div>
-
         <div class="feat">
           <div class="tag">Programs</div>
           <h4>Scheduling</h4>
-          <p>Manage program entries and schedules in a structured workflow.</p>
+          <p>Manage program entries and schedules using a structured process.</p>
         </div>
-
         <div class="feat">
-          <div class="tag">Billing & Payments</div>
-          <h4>Invoices + statuses</h4>
-          <p>Create billing items and mark payment status with clarity.</p>
+          <div class="tag">Billing</div>
+          <h4>Invoices + payments</h4>
+          <p>Create billing items and track payment statuses with clarity.</p>
         </div>
-
         <div class="feat">
           <div class="tag">Reports</div>
           <h4>Summaries</h4>
-          <p>Quick summary views to support decisions and track progress.</p>
+          <p>Quick reporting views that help your organization stay on top of activity.</p>
         </div>
-
-        <div class="feat">
-          <div class="tag">MediaConvert</div>
-          <h4>Transcoding jobs</h4>
-          <p>Start and monitor transcoding jobs via the MediaConvert service.</p>
-        </div>
-
-        <div class="feat">
-          <div class="tag">Submissions</div>
-          <h4>Structured entries</h4>
-          <p>Log submissions with a clear status trail for your organization.</p>
-        </div>
-
         <div class="feat">
           <div class="tag">Donations</div>
           <h4>Donation tracking</h4>
           <p>Record donations and maintain visibility into donor activity.</p>
         </div>
-
         <div class="feat">
-          <div class="tag">System</div>
-          <h4>Settings + health</h4>
-          <p>Tools and configuration to keep the Host and services running smoothly.</p>
+          <div class="tag">MediaConvert</div>
+          <h4>Transcoding jobs</h4>
+          <p>Start and monitor transcoding jobs (Host runs the service; team sees status).</p>
         </div>
       </div>
     </section>
@@ -475,17 +676,12 @@
     <!-- HOW IT WORKS -->
     <section class="card section" id="how">
       <h3>How it works (Host + Client)</h3>
-      <p>
-        On first launch, choose whether a computer is the <b>Host</b> or a <b>Client</b>. Clients can scan the LAN to
-        auto-fill the Host server URL, or enter it manually.
-      </p>
+      <p>Set up once, then your whole team connects to the same workspace on your local network.</p>
 
       <div class="how">
         <div class="step">
           <div class="stephead"><div class="num">1</div><h4>Choose Host or Client</h4></div>
-          <p>
-            Host runs the backend locally (Docker). Client connects to the Host URL and shares the same data.
-          </p>
+          <p>Host runs the backend. Clients connect to the Host and share the same data.</p>
           <div class="kv">
             <b>Host</b><span>Runs backend services</span>
             <b>Client</b><span>Connects to Host URL</span>
@@ -494,69 +690,30 @@
 
         <div class="step">
           <div class="stephead"><div class="num">2</div><h4>Auto-find the Host on Wi-Fi</h4></div>
-          <p>
-            Clients can click “Find Server Automatically” to detect the host on your local network.
-          </p>
+          <p>Clients can scan the LAN to detect the Host and auto-fill the server URL.</p>
           <div class="kv">
             <b>Discovery</b><span><code>UDP 49501</code> broadcast</span>
-            <b>Result</b><span>Auto-fills server URL</span>
+            <b>Fallback</b><span>Manual Host URL entry</span>
           </div>
         </div>
 
         <div class="step">
           <div class="stephead"><div class="num">3</div><h4>Services run on the Host</h4></div>
-          <p>
-            Rails API, database, cache, and MediaConvert service run locally on the Host.
-          </p>
+          <p>Rails API + database + cache + MediaConvert run locally on the Host.</p>
           <div class="kv">
-            <b>Rails API</b><span><code>TCP 4000</code></span>
+            <b>API</b><span><code>TCP 4000</code></span>
             <b>MediaConvert</b><span><code>TCP 5001</code></span>
-            <b>Data</b><span>Postgres + Redis</span>
+            <b>Storage</b><span>Postgres + Redis</span>
           </div>
         </div>
 
         <div class="step">
           <div class="stephead"><div class="num">4</div><h4>Firewall rules (Host)</h4></div>
-          <p>
-            Allow discovery + service ports on the Host firewall so Clients can connect.
-          </p>
+          <p>Allow discovery + service ports on the Host firewall so Clients can connect.</p>
           <div class="kv">
             <b>Ports</b><span><code>UDP 49501</code> • <code>TCP 4000</code> • <code>TCP 5001</code></span>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- REQUIREMENTS -->
-    <section class="card section" id="requirements">
-      <h3>System requirements</h3>
-      <p>Recommended for smooth Host + Client deployments.</p>
-
-      <div class="grid" style="margin-top:14px;">
-        <div class="feat">
-          <div class="tag">Host machine</div>
-          <h4>Docker Desktop</h4>
-          <p>Only the Host typically needs Docker to run backend services locally.</p>
-        </div>
-        <div class="feat">
-          <div class="tag">Network</div>
-          <h4>Same Wi-Fi/LAN</h4>
-          <p>Clients must be on the same network as the Host for auto-discovery to work.</p>
-        </div>
-        <div class="feat">
-          <div class="tag">Ports</div>
-          <h4>Open Host ports</h4>
-          <p>Allow UDP 49501 and TCP 4000/5001 on the Host firewall.</p>
-        </div>
-      </div>
-
-      <p style="margin-top:14px;">
-        Need help? Open the <b>FAQ</b> for troubleshooting and setup tips.
-      </p>
-
-      <div class="inlineActions">
-        <a class="btn ghost" href="faq.html">📘 Open FAQ</a>
-        <a class="btn" href="#download">⬇ Download</a>
       </div>
     </section>
 
@@ -565,6 +722,7 @@
       <div>Powered by AMS Network © 2026</div>
       <div style="display:flex; gap:14px; flex-wrap:wrap;">
         <a href="faq.html">FAQ</a>
+        <a href="#benefits">Benefits</a>
         <a href="#demo">Demo</a>
         <a href="#download">Download</a>
       </div>
@@ -573,4 +731,3 @@
   </div>
 </body>
 </html>
-
